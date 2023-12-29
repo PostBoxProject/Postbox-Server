@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  backend:
+    build: .
+    image: my-nest-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    environment:
+      DB_HOST: ${DB_HOST} #172.28.0.2
+      DB_PORT: 3306
+      DB_USER: ${DB_USERNAME} #root 
+      DB_PASSWORD: ${DB_PASSWORD} #ehddnjs369! 
+      DB_DATABASE: ${DB_DATABASE} #postbox 
+    networks:
+      - mynetwork
+
+  database:
+    container_name: postbox-db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} #ehddnjs369! 
+      MYSQL_DATABASE: ${DB_DATABASE} #postbox 
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
