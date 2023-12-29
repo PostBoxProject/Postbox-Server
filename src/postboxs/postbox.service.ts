@@ -1,8 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { PostBox } from "./postbox.entity";
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from "@nestjs/typeorm";
 import { PostboxRequest } from "./dto/postboxRequest";
+import { PostBoxMapper } from './mapper/postboxMapper';
+import { PostboxResponse } from "./dto/postboxResponse";
 
 @Injectable()
 export class PostBoxService{
@@ -12,7 +14,8 @@ export class PostBoxService{
         private postboxRepository: Repository<PostBox>
     ){}
     
-    async createPostbox(dto: PostboxRequest): Promise<PostBox>{
+    //생성
+    async createPostbox(dto: PostboxRequest): Promise<PostboxResponse>{
         const {name, email, password} = dto;
 
         const postbox = this.postboxRepository.create({
@@ -21,7 +24,26 @@ export class PostBoxService{
             password
         })
         await this.postboxRepository.save(postbox);
-        return postbox
+        return PostBoxMapper.toDto(postbox);
+    }
+
+    //전체 검색
+    async getAllPostbox(): Promise<PostboxResponse[]>{
+        const postboxes = await this.postboxRepository.find();
+        const responseDtoArray = postboxes.map(postbox => PostBoxMapper.toDto(postbox));
+
+        return responseDtoArray;
+    }
+
+    //키워드 검색
+    async getPostBoxByname(keyword: string): Promise<PostboxResponse[]>{
+        const postboxes = await this.postboxRepository.find({
+            where: {
+                name: Like(`%${keyword}%`),
+            },
+        });
+        const responseDtoArray = postboxes.map(postbox => PostBoxMapper.toDto(postbox));
+        return responseDtoArray;
     }
 
 }
