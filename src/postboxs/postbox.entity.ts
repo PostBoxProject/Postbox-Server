@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Letter } from "src/letters/letter.entity";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class PostBox extends BaseEntity{
@@ -13,4 +14,7 @@ export class PostBox extends BaseEntity{
 
     @Column()
     password: string;
+
+    @OneToMany(() => Letter, (letter) => letter.postbox)
+    letter: Letter[];
 }

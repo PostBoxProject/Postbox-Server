@@ -35,6 +35,13 @@ export class PostBoxService{
         return responseDtoArray;
     }
 
+    //id 검색
+    async getPostbox(id: number): Promise<PostboxResponse>{
+        const postbox = await this.postboxRepository.findOneBy({id});
+        
+        return PostBoxMapper.toDto(postbox);
+    }
+
     //키워드 검색
     async getPostBoxByname(keyword: string): Promise<PostboxResponse[]>{
         const postboxes = await this.postboxRepository.find({
