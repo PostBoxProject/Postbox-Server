@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { PostboxRequest } from "./dto/postboxRequest";
 import { PostboxResponse } from "./dto/postboxResponse";
 import { PostBoxService } from "./postbox.service";
 
+@ApiTags('postboxs')
 @Controller('postboxs')
 export class PostBoxCotroller{
 

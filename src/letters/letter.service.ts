@@ -36,7 +36,7 @@ export class LetterService{
     async getLetterById(id: number): Promise<LetterResponse>{
         const found = await this.letterRepository.findOneBy({id});
         if(!found){
-            throw new NotFoundException();
+            throw new NotFoundException('찾는 아이디가 없습니다.');
         }
         return LetterMapper.toDto(found);
     }
