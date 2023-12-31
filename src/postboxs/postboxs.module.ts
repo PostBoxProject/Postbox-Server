@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         TypeOrmModule.forFeature([PostBox])
       ],
     controllers: [PostBoxCotroller],
-    providers: [PostBoxService]
+    providers: [PostBoxService],
+    exports: [PostBoxService],
 })
 export class PostboxsModule {}

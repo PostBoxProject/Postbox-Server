@@ -1,5 +1,5 @@
 import { PostBox } from "src/postboxs/postbox.entity";
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Letter extends BaseEntity{
@@ -12,6 +12,6 @@ export class Letter extends BaseEntity{
     @Column()
     reed: boolean;
 
-    @OneToMany(() => PostBox, (postbox) => postbox.letter)
+    @ManyToOne(() => PostBox, (postbox) => postbox.letter)
     postbox: PostBox;
 }

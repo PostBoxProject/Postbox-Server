@@ -14,7 +14,7 @@ export class PostBoxCotroller{
     }
 
     @Get()
-    findPostBox(): Promise<PostboxResponse[]>{
+    findAllPostBox(): Promise<PostboxResponse[]>{
         return this.postboxService.getAllPostbox()
     }
 

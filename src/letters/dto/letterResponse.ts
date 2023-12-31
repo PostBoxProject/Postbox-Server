@@ -10,7 +10,10 @@ export class LetterResponse{
 
     @IsNotEmpty()
     read: boolean;
-    
+
     @IsNotEmpty()
-    postbox: PostBox;
+    postboxId: number;
+
+    @IsNotEmpty()
+    postboxName: string;
 }
