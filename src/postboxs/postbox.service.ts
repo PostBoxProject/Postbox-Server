@@ -4,7 +4,9 @@ import { Like, Repository } from 'typeorm';
 import { InjectRepository } from "@nestjs/typeorm";
 import { PostboxRequest } from "./dto/postboxRequest";
 import { PostBoxMapper } from './mapper/postboxMapper';
-import { PostboxResponse } from "./dto/postboxResponse";
+import { PaginatedPostboxResponse, PostboxResponse } from "./dto/postboxResponse";
+import { PageRequest } from "./dto/pageRequest";
+import { skip } from "node:test";
 
 @Injectable()
 export class PostBoxService{
@@ -28,11 +30,30 @@ export class PostBoxService{
     }
 
     //전체 검색
-    async getAllPostbox(): Promise<PostboxResponse[]>{
-        const postboxes = await this.postboxRepository.find();
-        const responseDtoArray = postboxes.map(postbox => PostBoxMapper.toDto(postbox));
+    async getAllPostbox(page: PageRequest): Promise<PaginatedPostboxResponse>{
+        console.log(page);
+        
+        const totalCount = await this.postboxRepository.count();
+        
+        const pageNo = page.pageNo;
+        const pageSize = page.pageSize;
+        const postboxes = await this.postboxRepository.find({
+            take: pageSize,
+            skip: pageNo,
+        });   
+        const totalpages = totalCount / pageSize;   
 
-        return responseDtoArray;
+        const responseDtoArray = postboxes.map(postbox => PostBoxMapper.toDto(postbox));
+        // const totalPages = Math.ceil(totalCount / page.getLimit());
+
+        return new PaginatedPostboxResponse(responseDtoArray, totalCount, totalpages, pageNo);
+    }
+
+    //id 검색
+    async getPostbox(id: number): Promise<PostboxResponse>{
+        const postbox = await this.postboxRepository.findOneBy({id});
+        
+        return PostBoxMapper.toDto(postbox);
     }
 
     //키워드 검색

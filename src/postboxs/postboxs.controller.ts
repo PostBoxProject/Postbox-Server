@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { PageRequest } from "./dto/pageRequest";
 import { PostboxRequest } from "./dto/postboxRequest";
-import { PostboxResponse } from "./dto/postboxResponse";
+import { PaginatedPostboxResponse, PostboxResponse } from "./dto/postboxResponse";
 import { PostBoxService } from "./postbox.service";
 
+@ApiTags('postboxs')
 @Controller('postboxs')
 export class PostBoxCotroller{
 
@@ -14,8 +17,8 @@ export class PostBoxCotroller{
     }
 
     @Get()
-    findPostBox(): Promise<PostboxResponse[]>{
-        return this.postboxService.getAllPostbox()
+    findAllPostBox(@Query() page: PageRequest): Promise<PaginatedPostboxResponse>{
+        return this.postboxService.getAllPostbox(page);
     }
 
     @Get('/:keyword')
