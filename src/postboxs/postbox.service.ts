@@ -7,6 +7,7 @@ import { PostBoxMapper } from './mapper/postboxMapper';
 import { PaginatedPostboxResponse, PostboxResponse } from "./dto/postboxResponse";
 import { PageRequest } from "./dto/pageRequest";
 import { skip } from "node:test";
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class PostBoxService{
@@ -20,10 +21,13 @@ export class PostBoxService{
     async createPostbox(dto: PostboxRequest): Promise<PostboxResponse>{
         const {name, email, password} = dto;
 
+        const salt = await bcrypt.getSalt();
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         const postbox = this.postboxRepository.create({
             name,
             email,
-            password
+            password: hashedPassword
         })
         await this.postboxRepository.save(postbox);
         return PostBoxMapper.toDto(postbox);
