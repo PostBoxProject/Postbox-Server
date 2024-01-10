@@ -27,6 +27,7 @@ export class LetterController{
         return this.letterService.getAllLetters();
     }
 
+    
     @Get('postbox/:postboxid')
     getAllMyLetter(@Param('postboxId') postboxId: number): Promise<LetterResponse[]>{
         return this.letterService.getAllLetters();
