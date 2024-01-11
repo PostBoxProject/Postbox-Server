@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 import { ApiTags } from "@nestjs/swagger";
+import { GetPostBoxId } from "src/decorator/get-postbox.decorator";
 import { CreateLetterRequest } from "./dto/letterRequest";
 import { LetterResponse } from "./dto/letterResponse";
 import { Letter } from "./letter.entity";
 import { LetterService } from "./letter.service";
+
 
 @ApiTags('letters')
 @Controller('letters')
@@ -16,6 +19,14 @@ export class LetterController{
         return this.letterService.createLetter(dto);
     }
 
+
+    @Get('/postbox')
+    @UseGuards(AuthGuard())     
+    getAllMyLetter(@GetPostBoxId() postboxId: number): Promise<LetterResponse[]>{           
+        return this.letterService.getMyLetters(postboxId);
+    }
+
+
     @Get('/:id')
     getLetterById(@Param('id') id: number) : Promise<LetterResponse>{
         return this.letterService.getLetterById(id);
@@ -27,10 +38,9 @@ export class LetterController{
         return this.letterService.getAllLetters();
     }
 
-    @Get('postbox/:postboxid')
-    getAllMyLetter(@Param('postboxId') postboxId: number): Promise<LetterResponse[]>{
-        return this.letterService.getAllLetters();
-    }
+
+    
+    
 
     @Delete('/:id')
     deleteLetter(@Param('id') id: number): Promise<void>{

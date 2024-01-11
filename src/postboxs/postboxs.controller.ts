@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, UseGuards, ValidationPipe } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { AuthRequest } from "./dto/authRequest";
 import { PageRequest } from "./dto/pageRequest";
 import { PostboxRequest } from "./dto/postboxRequest";
 import { PaginatedPostboxResponse, PostboxResponse } from "./dto/postboxResponse";
@@ -14,6 +15,11 @@ export class PostBoxCotroller{
     @Post()
     createPostBox_temp(@Body() dto: PostboxRequest): Promise<PostboxResponse>{
         return this.postboxService.createPostbox(dto);
+    }
+
+    @Post('/signin')
+    sigIn(@Body() authRequest: AuthRequest){
+        return this.postboxService.singIn(authRequest);
     }
 
     @Get()
