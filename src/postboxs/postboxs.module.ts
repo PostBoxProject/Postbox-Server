@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { GetPostBoxId } from 'src/decorator/get-postbox.decorator';
 
 @Module({
     imports: [
@@ -13,13 +14,13 @@ import { JwtStrategy } from './jwt.strategy';
       JwtModule.register({
         secret: 'postbox123',
         signOptions:{
-          expiresIn: 60*60,
+          expiresIn: 60 * 60,
         }
       }),
         TypeOrmModule.forFeature([PostBox])
       ],
     controllers: [PostBoxCotroller],
     providers: [PostBoxService, JwtStrategy],
-    exports: [PostBoxService],
+    exports: [PostBoxService, JwtStrategy, PassportModule],
 })
 export class PostboxsModule {}

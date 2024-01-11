@@ -1,7 +1,11 @@
-import { createParamDecorator, ExecutionContext} from "@nestjs/common";
+import { createParamDecorator, ExecutionContext, } from "@nestjs/common";
 import { PostBox } from "src/postboxs/postbox.entity";
 
-export const GetPostBoxName = createParamDecorator((data, ctx: ExecutionContext): PostBox =>{
+export const GetPostBoxId = createParamDecorator((data, ctx: ExecutionContext): PostBox =>{
+    
     const req = ctx.switchToHttp().getRequest();
-    return req.name;
+    
+    //console.log('req', req.user.id)
+    
+    return req.user.id;
 })

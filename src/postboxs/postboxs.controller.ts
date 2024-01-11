@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, UseGuards, ValidationPipe } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { AuthRequest } from "./dto/authRequest";
 import { PageRequest } from "./dto/pageRequest";

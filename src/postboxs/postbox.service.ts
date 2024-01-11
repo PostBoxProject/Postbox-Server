@@ -19,7 +19,7 @@ export class PostBoxService{
         private postboxRepository: Repository<PostBox>,
         private jwtService: JwtService
     ){}
-    
+
     
     //생성
     async createPostbox(dto: PostboxRequest): Promise<PostboxResponse>{
@@ -41,7 +41,8 @@ export class PostBoxService{
     //postbox 접속 (로그인)
     async singIn(authRequest: AuthRequest): Promise<{accessToken: string}>{
         const {postboxName, password} = authRequest;
-        const postBox = await this.postboxRepository.findOneBy({name:postboxName})
+        
+        const postBox = await this.postboxRepository.findOneBy({name:postboxName})        
 
         if(postBox && (await bcrypt.compare(password, postBox.password))){
             const payload = { postBox }

@@ -34,7 +34,7 @@ export class LetterService{
 
     //id로 letter 검색
     async getLetterById(id: number): Promise<LetterResponse>{
-        const found = await this.letterRepository.findOneBy({id});
+        const found = await this.letterRepository.findOneBy({id});        
         if(!found){
             throw new NotFoundException('찾는 아이디가 없습니다.');
         }
@@ -49,11 +49,13 @@ export class LetterService{
     }
 
 
-    //내 letter 검색 (일단 postboxid로 검색)
+    //내 letter 검색 
     async getMyLetters(postboxId: number): Promise<LetterResponse[]>{
+        //console.log('poId',postboxId);
         const letters = await this.letterRepository.find({
-            where: { postbox: { id: postboxId } },
+            where: { postbox: { id: postboxId } },  
         });
+        
         const responseDtoArray = letters.map(letter => LetterMapper.toDto(letter));
         return responseDtoArray;
     }

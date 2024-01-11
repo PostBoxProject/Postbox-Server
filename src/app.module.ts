@@ -11,6 +11,6 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [    
     TypeOrmModule.forRoot(typeORMConfig),
-    PostboxsModule, LettersModule, AuthModule],  
+    PostboxsModule, LettersModule],  
 })
 export class AppModule {}
