@@ -28,8 +28,8 @@ export class PostBoxCotroller{
     }
 
     @Get('/:keyword')
-    findPostBoxByName(@Param('keyword') keyword: string): Promise<PostboxResponse[]>{
-        return this.postboxService.getPostBoxByname(keyword);
+    findPostBoxByName(@Query() page: PageRequest, @Param('keyword') keyword: string): Promise<PaginatedPostboxResponse>{
+        return this.postboxService.getPostBoxByname(page, keyword);
     }
     
 }

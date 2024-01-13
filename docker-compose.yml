@@ -15,7 +15,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD} #ehddnjs369! 
       DB_DATABASE: ${DB_DATABASE} #postbox 
     networks:
-      - mynetwork
+      - postnetwork  
+ 
 
   database:
     container_name: postbox-db
@@ -26,8 +27,8 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - mynetwork
+      - postnetwork
 
 networks:
-  mynetwork:
+  postnetwork:
     driver: bridge

@@ -1,5 +1,5 @@
 # 이미지의 기반이 될 이미지를 선택합니다.
-FROM node:16-alpine as builder
+FROM node:20-alpine as builder
 
 # 작업 디렉터리를 설정합니다.
 WORKDIR /app
@@ -12,7 +12,7 @@ RUN npm install
 RUN npm run build
 
 # 런타임 이미지를 생성합니다.
-FROM node:16-alpine
+FROM node:20-alpine
 
 # 작업 디렉터리를 설정합니다.
 WORKDIR /app

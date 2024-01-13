@@ -65,14 +65,33 @@ export class PostBoxService{
         const pageSize = page.pageSize;
         const postboxes = await this.postboxRepository.find({
             take: pageSize,
-            skip: pageNo,
+            skip: (pageNo - 1) * pageSize,
         });   
-        const totalpages = totalCount / pageSize;   
+        const totalpages = Math.ceil(totalCount / pageSize);   
 
         const responseDtoArray = postboxes.map(postbox => PostBoxMapper.toDto(postbox));
         // const totalPages = Math.ceil(totalCount / page.getLimit());
 
         return new PaginatedPostboxResponse(responseDtoArray, totalCount, totalpages, pageNo);
+    }
+
+    //키워드 검색
+    async getPostBoxByname(page: PageRequest, keyword: string): Promise<PaginatedPostboxResponse>{
+        const pageNo = page.pageNo;
+        const pageSize = page.pageSize;
+        const totalCount = await this.postboxRepository.count();
+
+        const postboxes = await this.postboxRepository.find({
+            where: {
+                name: Like(`%${keyword}%`),
+            },
+            take: pageSize,
+            skip: (pageNo-1) * pageSize,
+        });
+        const totalPages = Math.ceil(totalCount / pageSize);
+        
+        const responseDtoArray = postboxes.map(postbox => PostBoxMapper.toDto(postbox));
+        return new PaginatedPostboxResponse(responseDtoArray, totalCount, totalPages, pageNo);
     }
 
 
@@ -84,15 +103,6 @@ export class PostBoxService{
     }
 
 
-    //키워드 검색
-    async getPostBoxByname(keyword: string): Promise<PostboxResponse[]>{
-        const postboxes = await this.postboxRepository.find({
-            where: {
-                name: Like(`%${keyword}%`),
-            },
-        });
-        const responseDtoArray = postboxes.map(postbox => PostBoxMapper.toDto(postbox));
-        return responseDtoArray;
-    }
+    
 
 }
