@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { PostBox } from "./postbox.entity";
 import { Like, Repository } from 'typeorm';
 import { InjectRepository } from "@nestjs/typeorm";
@@ -33,8 +33,20 @@ export class PostBoxService{
             email,
             password: hashedPassword
         })
-        await this.postboxRepository.save(postbox);
-        return PostBoxMapper.toDto(postbox);
+
+        //중복검사 (아무리봐도 repository 있는게 좋은거 같은데...)
+        try{
+            await this.postboxRepository.save(postbox);
+            return PostBoxMapper.toDto(postbox);            
+        }catch(error){
+            console.log('error',error.code);
+            if(error.code === 'ER_DUP_ENTRY'){
+                throw new ConflictException('이미 존재하는 이름 입니다.');
+            }
+            else{
+                throw new ConflictException('internal error')
+            }
+        }         
     }
 
 
