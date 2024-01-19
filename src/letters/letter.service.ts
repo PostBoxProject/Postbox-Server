@@ -38,6 +38,8 @@ export class LetterService{
         if(!found){
             throw new NotFoundException('찾는 아이디가 없습니다.');
         }
+        found.reed = true;
+        await this.letterRepository.save(found);
         return LetterMapper.toDto(found);
     }
 
@@ -68,6 +70,9 @@ export class LetterService{
             throw new NotFoundException("can't such delete id");
         }
     }
+
+
+    
     
 
 }
