@@ -51,16 +51,17 @@ export class PostBoxService{
 
 
     //postbox 접속 (로그인)
-    async singIn(authRequest: AuthRequest): Promise<{accessToken: string}>{
+    async singIn(authRequest: AuthRequest): Promise<{accessToken: string, postBoxId: number}>{
         const {postboxName, password} = authRequest;
         
-        const postBox = await this.postboxRepository.findOneBy({name:postboxName})        
+        const postBox = await this.postboxRepository.findOneBy({name:postboxName})  
+        const postBoxId = postBox.id      
 
         if(postBox && (await bcrypt.compare(password, postBox.password))){
-            const payload = { postBox }
+            const payload = { postBoxId }
             const accessToken = await this.jwtService.sign(payload);
 
-            return {accessToken};
+            return {accessToken, postBoxId: postBox.id};
         } else{
             throw new UnauthorizedException('login fail');
         }
