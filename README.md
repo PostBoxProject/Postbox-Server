@@ -1,73 +1,32 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# 💌 친구들에게 익명 편지를 남길 수 있는 서비스 💌
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<br>
 
-## Description
+## 📮 기능 소개
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+  - 자신만의 우체통을 생성해 편지를 받아요!
+  - 친구의 우체통에 편지를 남겨 보세요!
+  - 다른 사람의 우체통에 남겨진 편지를 구경해요!
 
-## Installation
+<br>
 
-```bash
-$ npm install
-```
+## 📮 화면 구성
 
-## Running the app
+|<img width="300" alt="postbox_main" src="https://github.com/PostBoxProject/backend/assets/100004234/5080dc0f-c20b-4134-9635-0af880cd01a8">|<img width="300" alt="postbox_search" src="https://github.com/PostBoxProject/backend/assets/100004234/e389834d-3264-4414-a074-183dedee33c0">|<img width="300" alt="postbox_box" src="https://github.com/PostBoxProject/backend/assets/100004234/050a801f-f429-4101-a1f3-529f6cc928b9">|
+|:---:|:---:|:---:|
+|<img width="300" alt="postbox_send" src="https://github.com/PostBoxProject/backend/assets/100004234/b7138ac0-236b-4f0f-942e-3c0876b7cbb7">|<img width="300" alt="postbox_letters" src="https://github.com/PostBoxProject/backend/assets/100004234/3f4202ba-5aad-4e47-921c-b274f1099049">|<img width="300" alt="postbox_letter" src="https://github.com/PostBoxProject/backend/assets/100004234/973909c3-d177-49fc-91cb-76f0e1b1dd41">|
 
-```bash
-# development
-$ npm run start
+<br>
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
+## 📮 서비스 아키텍처
+<img width="800" alt="postbox_architecture" src="https://github.com/PostBoxProject/.github/assets/100004234/65cd6449-8c5d-4c55-9885-734b82568abe">
 
-## Test
+## 📮 사용 기술
 
-```bash
-# unit tests
-$ npm run test
+|Frontend|Backend|infra|
+|:---:|:---:|:---:|
+|<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"><br>   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white"><br>  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"><br>   <img src="https://img.shields.io/badge/NextJs-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"><br>  | <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"><br> <img src="https://img.shields.io/badge/ nodedjs-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"><br> <img src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white"><br>  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <br>|<img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"><br>  <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"><br> |
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
