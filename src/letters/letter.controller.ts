@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Req, SetMetadata, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { GetPostBoxId } from "src/decorator/get-postbox.decorator";
+import { Roles } from "src/decorator/role.decorator";
 import { CreateLetterRequest } from "./dto/letterRequest";
 import { LetterResponse } from "./dto/letterResponse";
 import { MyAccessGuard } from "./guard/MyAccessGuard";
@@ -16,6 +17,8 @@ export class LetterController{
     constructor(private letterService: LetterService){}
 
     @Post()
+    // @SetMetadata('roles',['admin'])
+    @Roles('admin')
     @ApiOperation({summary: 'letter 생성', description: '.'})
     createLetter(@Body() dto: CreateLetterRequest): Promise<LetterResponse> {
         return this.letterService.createLetter(dto);

@@ -16,6 +16,9 @@ export class PostBox extends BaseEntity{
     @Column()
     password: string;
 
+    // @Column()
+    // role: string;
+
     @OneToMany(() => Letter, (letter) => letter.postbox)
     letter: Letter[];
 }
