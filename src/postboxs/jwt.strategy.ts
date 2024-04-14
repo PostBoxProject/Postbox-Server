@@ -15,12 +15,12 @@ export class JwtStrategy extends PassportStrategy(Strategy){
     }
 
     async validate(payload){
-        const { postBox } = payload;
-        console.log('id',postBox.id)
-        if (!postBox){
+        const { postBoxId } = payload;
+        console.log('id',postBoxId)
+        if (!postBoxId){
             throw new UnauthorizedException('payload 없음');
         }
-        const postbox: PostboxResponse = await this.postboxService.getPostbox(postBox.id)
+        const postbox: PostboxResponse = await this.postboxService.getPostbox(postBoxId)
 
         if(!postbox){
             throw new UnauthorizedException();

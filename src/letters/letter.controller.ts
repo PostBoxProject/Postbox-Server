@@ -4,6 +4,7 @@ import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { GetPostBoxId } from "src/decorator/get-postbox.decorator";
 import { CreateLetterRequest } from "./dto/letterRequest";
 import { LetterResponse } from "./dto/letterResponse";
+import { MyAccessGuard } from "./guard/MyAccessGuard";
 import { Letter } from "./letter.entity";
 import { LetterService } from "./letter.service";
 
@@ -21,10 +22,10 @@ export class LetterController{
     }
 
 
-    @Get('/postbox')
+    @Get('/postbox/:id')
     @ApiOperation({summary: '현재 사용자가 받은 letter 조회', description: '.'})
-    @UseGuards(AuthGuard())     
-    getAllMyLetter(@GetPostBoxId() postboxId: number): Promise<LetterResponse[]>{           
+    @UseGuards(AuthGuard(), MyAccessGuard)     
+    getAllMyLetter(@Param('id') postboxId: number): Promise<LetterResponse[]>{           
         return this.letterService.getMyLetters(postboxId);
     }
 
