@@ -5,6 +5,7 @@ import { GetPostBoxId } from "src/decorator/get-postbox.decorator";
 import { Roles } from "src/decorator/role.decorator";
 import { CreateLetterRequest } from "./dto/letterRequest";
 import { LetterResponse } from "./dto/letterResponse";
+import { LetterWordRankDto } from "./dto/letterWordRankDto";
 import { MyAccessGuard } from "./guard/MyAccessGuard";
 import { Letter } from "./letter.entity";
 import { LetterService } from "./letter.service";
@@ -45,6 +46,9 @@ export class LetterController{
         return this.letterService.getAllLetters();
     }
 
+
+    
+
     
 
     @Delete('/:id')
@@ -54,6 +58,14 @@ export class LetterController{
     }
 
 
+    
+    //편지 단어 통계
+    @Get('rank/:postBoxId')
+    @ApiOperation({summary: 'letter들 포함된 단어 통계', description: '.'})
+    findLetterByKeyword(@Param('postBoxId') postBoxId: number): Promise<LetterWordRankDto[]>{    
+        return this.letterService.generateWordRankByPostBox(postBoxId);        
+    }
+    
 
 
 }

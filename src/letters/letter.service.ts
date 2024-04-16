@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { count } from "console";
 import { PostBox } from "src/postboxs/postbox.entity";
 import { PostBoxService } from "src/postboxs/postbox.service";
 import { Repository } from "typeorm";
 import { CreateLetterRequest } from "./dto/letterRequest";
 import { LetterResponse } from "./dto/letterResponse";
+import { LetterWordRankDto } from "./dto/letterWordRankDto";
 import { Letter } from "./letter.entity";
 import { LetterMapper } from "./mapper/letterMapper";
 
@@ -73,6 +75,42 @@ export class LetterService{
 
 
     
+    async generateWordRankByPostBox(postBoxId: number): Promise<LetterWordRankDto[]>{
+       
+        const wordMap = new Map<string, number>();
+        const wordRankList: LetterWordRankDto[] = [];
+
+        const letters = await this.letterRepository.find({
+             where: { postbox: { id: postBoxId } } 
+        });
+
+        console.log('letters',letters);
+        console.time('rank');
+
+        letters.forEach((letter) => {
+            const words = letter.description.toLowerCase().match(/\b\w+\b/g);
+            
+            if (words) {
+              words.forEach((word) => {                
+                wordMap.set(word, (wordMap.get(word) || 0) + 1);
+              });
+            }
+        });
+        
+        console.log('word3', wordMap);           
+
+        wordMap.forEach((count,word) =>{
+            const dto: LetterWordRankDto = {
+                word: word,
+                count: count
+            };
+            wordRankList.push(dto);
+        });
+
+        console.timeEnd('rank');
+
+        return wordRankList;
+    }
     
 
 }

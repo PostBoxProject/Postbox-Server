@@ -11,6 +11,10 @@ import * as bcrypt from 'bcryptjs';
 import { AuthRequest } from "./dto/authRequest";
 import { JwtService } from "@nestjs/jwt";
 
+//worker
+import { Worker } from 'worker_threads';
+import * as path from 'path';
+
 @Injectable()
 export class PostBoxService{
 
@@ -69,8 +73,19 @@ export class PostBoxService{
 
 
     //전체 검색
-    async getAllPostbox(page: PageRequest): Promise<PaginatedPostboxResponse>{
-        console.log(page);
+    async getAllPostbox(page: PageRequest): Promise<PaginatedPostboxResponse>{        
+        
+        console.log("getAll");
+
+        //worker
+        const workerData = { data: 'hello_worker' }
+        const worker = new Worker(path.join(__dirname,'workers','worker.js'),{workerData});
+
+        worker.on('message', (result) => {
+            console.log('worker result', result);
+        });
+        
+
         
         const totalCount = await this.postboxRepository.count();
         
@@ -87,6 +102,8 @@ export class PostBoxService{
 
         return new PaginatedPostboxResponse(responseDtoArray, totalCount, totalpages, pageNo);
     }
+
+
 
     //키워드 검색
     async getPostBoxByname(page: PageRequest, keyword: string): Promise<PaginatedPostboxResponse>{
