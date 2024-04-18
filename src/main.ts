@@ -4,8 +4,11 @@ import { DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 
 async function bootstrap() {  
 
-  const app = await NestFactory.create(AppModule, {cors: true});  
-
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+    logger: process.env.NODE_ENV === 'prod' ? ['error', 'warn', 'log'] : ['debug'],  
+    }  
+  );  
 
   app.enableCors({    
     maxAge: 86400,

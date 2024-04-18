@@ -84,8 +84,8 @@ export class LetterService{
              where: { postbox: { id: postBoxId } } 
         });
 
-        console.log('letters',letters);
-        console.time('rank');
+        // console.log('letters',letters);
+        console.time('rankword method time');
 
         letters.forEach((letter) => {
             const words = letter.description.toLowerCase().match(/\b\w+\b/g);
@@ -97,7 +97,7 @@ export class LetterService{
             }
         });
         
-        console.log('word3', wordMap);           
+        // console.log('word3', wordMap);           
 
         wordMap.forEach((count,word) =>{
             const dto: LetterWordRankDto = {
@@ -107,7 +107,7 @@ export class LetterService{
             wordRankList.push(dto);
         });
 
-        console.timeEnd('rank');
+        console.timeEnd('rankword method time');
 
         return wordRankList;
     }

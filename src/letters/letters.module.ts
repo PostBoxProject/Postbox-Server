@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { GetPostBoxId } from 'src/decorator/get-postbox.decorator';
+import { LoggingInterceptor } from 'src/interceptor/logging.interceptor';
 import { PostBoxService } from 'src/postboxs/postbox.service';
 import { PostboxsModule } from 'src/postboxs/postboxs.module';
 import { MyAccessGuard } from './guard/MyAccessGuard';
@@ -17,6 +18,10 @@ import { LetterService } from './letter.service';
         PostboxsModule,      
       ],
     controllers: [LetterController],
-    providers: [LetterService, MyAccessGuard, JwtService]
+    providers: [
+      LetterService, MyAccessGuard, JwtService,
+      LoggingInterceptor
+    
+    ]
 })
 export class LettersModule {}

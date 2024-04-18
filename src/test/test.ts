@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+
 import * as path from 'path';
 import { Worker } from 'worker_threads';
 
@@ -6,9 +6,19 @@ export class Test{
     text: String = "text";
 }
 
+import { Injectable, Logger } from "@nestjs/common";
 
 @Injectable()
-export class workerTest{
+export class TestService{
+
+    private readonly logger =  new Logger(TestService.name);
+
+    getHello(): String{
+        this.logger.warn("testlog");
+        return "hello";
+    }
+    
+
 
     private readonly pool: Worker[] = [];
     private readonly workerPath = path.join(__dirname, 'worker.js')
@@ -55,6 +65,10 @@ export class workerTest{
           worker.once('error', errorHandler);
         });
     }
-    
+
+
+
+
+
 }
 
