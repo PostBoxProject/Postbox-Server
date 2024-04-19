@@ -4,11 +4,11 @@ import { count } from "console";
 import { PostBox } from "src/postboxs/postbox.entity";
 import { PostBoxService } from "src/postboxs/postbox.service";
 import { Repository } from "typeorm";
-import { CreateLetterRequest } from "./dto/letterRequest";
-import { LetterResponse } from "./dto/letterResponse";
-import { LetterWordRankDto } from "./dto/letterWordRankDto";
-import { Letter } from "./letter.entity";
-import { LetterMapper } from "./mapper/letterMapper";
+import { CreateLetterRequest } from "../dto/letterRequest";
+import { LetterResponse } from "../dto/letterResponse";
+import { LetterWordRankDto } from "../dto/letterWordRankDto";
+import { Letter } from "../letter.entity";
+import { LetterMapper } from "../mapper/letterMapper";
 
 @Injectable()
 export class LetterService{
@@ -83,9 +83,8 @@ export class LetterService{
         const letters = await this.letterRepository.find({
              where: { postbox: { id: postBoxId } } 
         });
-
-        // console.log('letters',letters);
-        console.time('rankword method time');
+        
+        // console.time('rankword method time');
 
         letters.forEach((letter) => {
             const words = letter.description.toLowerCase().match(/\b\w+\b/g);
@@ -95,9 +94,7 @@ export class LetterService{
                 wordMap.set(word, (wordMap.get(word) || 0) + 1);
               });
             }
-        });
-        
-        // console.log('word3', wordMap);           
+        });             
 
         wordMap.forEach((count,word) =>{
             const dto: LetterWordRankDto = {
@@ -107,10 +104,11 @@ export class LetterService{
             wordRankList.push(dto);
         });
 
-        console.timeEnd('rankword method time');
+        // console.timeEnd('rankword method time');
 
         return wordRankList;
     }
+
     
 
 }

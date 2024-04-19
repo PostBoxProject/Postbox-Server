@@ -9,7 +9,8 @@ import { PostboxsModule } from 'src/postboxs/postboxs.module';
 import { MyAccessGuard } from './guard/MyAccessGuard';
 import { LetterController } from './letter.controller';
 import { Letter } from './letter.entity';
-import { LetterService } from './letter.service';
+import { LetterService } from './service/letter.service';
+import { WordRankService } from './service/letter.wordRankService';
 
 
 @Module({
@@ -19,7 +20,7 @@ import { LetterService } from './letter.service';
       ],
     controllers: [LetterController],
     providers: [
-      LetterService, MyAccessGuard, JwtService,
+      LetterService, WordRankService, MyAccessGuard, JwtService,
       LoggingInterceptor
     
     ]

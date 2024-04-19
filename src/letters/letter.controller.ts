@@ -9,14 +9,18 @@ import { LetterResponse } from "./dto/letterResponse";
 import { LetterWordRankDto } from "./dto/letterWordRankDto";
 import { MyAccessGuard } from "./guard/MyAccessGuard";
 import { Letter } from "./letter.entity";
-import { LetterService } from "./letter.service";
+import { LetterService } from "./service/letter.service";
+import { WordRankService } from "./service/letter.wordRankService";
 
 
 @ApiTags('letters')
 @Controller('letters')
 export class LetterController{
 
-    constructor(private letterService: LetterService){}
+    constructor(
+        private letterService: LetterService,
+        private woredRankService: WordRankService,
+    ){}
 
     @Post()
     // @SetMetadata('roles',['admin'])
@@ -69,12 +73,14 @@ export class LetterController{
     }
 
     //편지 단어 통계 worker
-    @Get('rank/:postBoxId')
+    @Get('rankW/:postBoxId')
     @UseInterceptors(LoggingInterceptor)
     @ApiOperation({summary: 'letter들 포함된 단어 통계 worker', description: '.'})
     findLetterByKeywordWorker(@Param('postBoxId') postBoxId: number): Promise<LetterWordRankDto[]>{    
-        return this.letterService.generateWordRankByPostBox(postBoxId);        
+        return this.woredRankService.generateWordRankByPostBoxWorker(postBoxId);        
     }
+
+    
     
 
 
