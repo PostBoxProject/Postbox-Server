@@ -1,7 +1,9 @@
 import { LetterResponse } from "../dto/letterResponse";
 import { Letter } from "../letter.entity";
+import { LetterWordRankDto } from "../dto/letterWordRankDto"; 
 
 export class LetterMapper{
+
     static toDto(letter: Letter): LetterResponse {
         const letterDto = new LetterResponse();        
 
@@ -15,6 +17,15 @@ export class LetterMapper{
 
 
         return letterDto;
+    }
+
+    static toWordRankDto(word: string, count: number): LetterWordRankDto {
+        const wordRankDto = new LetterWordRankDto();
+        
+        wordRankDto.word = word;
+        wordRankDto.count = count;
+
+        return wordRankDto;
     }
 }
 

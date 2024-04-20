@@ -8,9 +8,10 @@ import { AuthModule } from './auth/auth.module';
 
 
 
+
 @Module({
   imports: [    
-    TypeOrmModule.forRoot(typeORMConfig),
+    TypeOrmModule.forRoot(typeORMConfig),    
     PostboxsModule, LettersModule],  
 })
 export class AppModule {}
