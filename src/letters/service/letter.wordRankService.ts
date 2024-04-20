@@ -7,13 +7,19 @@ import { Letter } from "../letter.entity";
 
 import { Worker } from 'worker_threads';
 import * as path from 'path';
+import { InjectQueue } from "@nestjs/bull";
+import { Queue } from "bull";
+
+
 
 @Injectable()
 export class WordRankService{
 
     constructor(
         @InjectRepository(Letter)
-        private letterRepository: Repository<Letter>,        
+        private letterRepository: Repository<Letter>,    
+        @InjectQueue('wordRankQueue')
+        private readonly wordRankQueue: Queue,
     ){}
 
     private poolCount: number = 0;
@@ -22,6 +28,18 @@ export class WordRankService{
     private readonly isReady: EventEmitter = new EventEmitter();
     
     private readonly workerPath = path.join(__dirname,'/..', 'workers', 'letterWordRanker.js')
+
+
+
+    async rankWordsInLetters(postBoxId: number): Promise<LetterWordRankDto[]>{
+        
+        const letters = await this.letterRepository.find({
+            where: { postbox: { id: postBoxId } } 
+        });
+        
+        const job = await this.wordRankQueue.add('rankJob',letters);
+        return job.finished();
+    }
 
 
     async generateWordRankByPostBoxWorker(postBoxId: number): Promise<LetterWordRankDto[]>{           

@@ -80,6 +80,14 @@ export class LetterController{
         return this.woredRankService.generateWordRankByPostBoxWorker(postBoxId);        
     }
 
+    //편지 단어 통계 bull
+    @Get('rankB/:postBoxId')
+    @UseInterceptors(LoggingInterceptor)
+    @ApiOperation({summary: 'letter들 포함된 단어 통계 worker', description: '.'})
+    findLetterByKeywordBull(@Param('postBoxId') postBoxId: number): Promise<LetterWordRankDto[]>{    
+        return this.woredRankService.rankWordsInLetters(postBoxId);        
+    }
+
     
     
 

@@ -11,18 +11,22 @@ import { LetterController } from './letter.controller';
 import { Letter } from './letter.entity';
 import { LetterService } from './service/letter.service';
 import { WordRankService } from './service/letter.wordRankService';
+import { BullModule } from '@nestjs/bull';
+import { RankWordProcessor } from './workers/rankword-processor';
 
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Letter]),
+        // BullModule.forRoot({redis: {host:'localhost',port: 6379}}),
+        BullModule.registerQueue({redis: {host:'localhost',port: 6379}, name: 'wordRankQueue'}),
+        // BullModule.registerQueue({ name: 'wordRankQueue'}),
         PostboxsModule,      
       ],
     controllers: [LetterController],
     providers: [
       LetterService, WordRankService, MyAccessGuard, JwtService,
-      LoggingInterceptor
-    
+      LoggingInterceptor, RankWordProcessor
     ]
 })
 export class LettersModule {}
