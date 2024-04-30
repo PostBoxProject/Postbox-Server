@@ -1,12 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
+import { winstonLogger } from './config/logger.config';
 
 async function bootstrap() {  
 
   const app = await NestFactory.create(AppModule, {
     cors: true,
-    logger: process.env.NODE_ENV === 'prod' ? ['error', 'warn', 'log'] : ['debug'],  
+    // logger: process.env.NODE_ENV === 'prod' ? ['error', 'warn', 'log'] : ['debug'],  
+    logger : winstonLogger
     }  
   );  
 

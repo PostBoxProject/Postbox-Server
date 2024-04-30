@@ -5,6 +5,11 @@ import { PostboxResponse } from "./dto/postboxResponse";
 import { PostBox } from "./postbox.entity";
 import { PostBoxService } from "./postbox.service";
 
+export class JwtPayload {
+    postBoxId: number;
+    
+}
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy){
     constructor(private postboxService: PostBoxService){
@@ -14,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         })
     }
 
-    async validate(payload){
+    async validate(payload: JwtPayload){
         const { postBoxId } = payload;
         console.log('id',postBoxId)
         if (!postBoxId){
